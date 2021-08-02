@@ -1,0 +1,152 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "App Desafio Rocket",
+    "version": "1.0.0",
+    "title": "Atlas",
+    "contact": {
+      "email": "odairmenezes@live.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Create a user",
+        "description": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "proprierts": {
+                      "name": "string",
+                      "email": "string"
+                    }
+                },
+                "example": {
+                  "name": "Mail user",
+                  "description": "user@mail.com"
+                }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "Created"
+          },
+          "400": {
+            "description": "User alread exists!"
+          }
+        }
+      }
+    },
+
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Show user by id",
+        "description": "Find user by id and show data",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id values that need to be considered for filter",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "default": "available"
+            }
+          }
+        ],
+        "responses": {
+          "200":{
+            "description": "Sucess!"
+          },
+          "404": {
+            "description": "User not alread exists!"
+          }
+        }
+      }
+    },
+    
+    "/users/findAll": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Finds All Users",
+        "description": "Find all Users and Show.",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "description": "Id user adm for filter",
+            "required": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation!"
+            },
+          "400": {
+            "description": "Operation allowed only for admin users"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Turn Admin a User",
+        "description": "Turn User a ADMIN.",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation!"
+          },
+          "404": {
+            "description": "User not aleready exists!"
+          }
+        }
+      }
+    }
+  }
+}
